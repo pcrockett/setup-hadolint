@@ -1,0 +1,11 @@
+_commit: 2b96740
+_src_path: gh:pcrockett/template-setup-action
+action_description: Installs hadolint in your GitHub workflows
+action_human_friendly_name: Setup Hadolint
+action_name: setup-hadolint
+github_org: pcrockett
+tool_doc_url: https://github.com/hadolint/hadolint
+tool_download_url: https://github.com/hadolint/hadolint/releases/download/v${VERSION}/hadolint-linux-x86_64
+tool_latest_checksum: 6bf226944684f56c84dd014e8b979d27425c0148f61b3bd99bcc6f39e9dc5a47
+tool_latest_version: 2.14.0
+tool_name: hadolint

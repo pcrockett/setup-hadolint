@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-action.json
+
+name: 'Setup Hadolint'
+description: 'Installs hadolint in your GitHub workflows'
+inputs:
+  version:
+    description: 'Version to install, ex: 2.14.0'
+    default: '2.14.0'
+  checksum:
+    description: 'SHA256 checksum of download artifact'
+    default: '6bf226944684f56c84dd014e8b979d27425c0148f61b3bd99bcc6f39e9dc5a47'
+
+runs:
+  using: "composite"
+  steps:
+    - id: cache
+      name: Cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+      with:
+        path: ~/.cache/setup-hadolint
+        key: setup-hadolint-1|${{ inputs.version }}|${{ inputs.checksum }}
+
+    - name: Download hadolint
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+        CHECKSUM: ${{ inputs.checksum }}
+      run: |
+        mkdir -p ~/.cache/setup-hadolint
+        "${GITHUB_ACTION_PATH}/download-artifact.sh" \
+          "https://github.com/hadolint/hadolint/releases/download/v${VERSION}/hadolint-linux-x86_64" \
+          ~/.cache/setup-hadolint/hadolint \
+          "${CHECKSUM}"
+
+    - name: Install hadolint
+      shell: bash
+      run: |
+        install_dir=~/.local/bin
+        mkdir -p "${install_dir}"
+        cd ~/.cache/setup-hadolint
+        chmod +x hadolint
+        cp hadolint "${install_dir}"
+        echo "${install_dir}" >>"${GITHUB_PATH}"
