@@ -5,10 +5,10 @@ description: 'Installs hadolint in your GitHub workflows'
 inputs:
   version:
     description: 'Version to install, ex: 2.14.0'
-    default: '2.14.0'
+    default: '2.15.1'
   checksum:
     description: 'SHA256 checksum of download artifact'
-    default: '6bf226944684f56c84dd014e8b979d27425c0148f61b3bd99bcc6f39e9dc5a47'
+    default: 'c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507'
 
 runs:
   using: "composite"
